@@ -101,7 +101,7 @@ export function stubAgent(agent: IAgent) {
   });
 }
 
-// New test case that simulates the conditions under which the Silent Slashing Swindle bug occurs
+// New test case that simulates the conditions under which silent failures or stoppages in event tracking might occur
 describe('Silent Slashing Swindle bug', () => {
   it('should correctly handle the conditions under which the bug occurs', async () => {
     // Create a new instance of the RandaoJob class
@@ -112,10 +112,13 @@ describe('Silent Slashing Swindle bug', () => {
     randaoJob.applyInitiateKeeperSlashing(/* parameters */);
     randaoJob.applySlashKeeper(/* parameters */);
 
-    // Check if the event tracking system correctly tracks the execution of tasks
-    assert(/* condition */);
+    // Simulate the conditions under which silent failures or stoppages in event tracking might occur
+    /* code to simulate these conditions */
 
-    // Check if the alert system correctly sends an alert when there are silent failures or stoppages in event tracking
+    // Call the checkForEventTrackingFailures function
+    randaoJob.checkForEventTrackingFailures();
+
+    // Check if the function correctly detects these conditions and sends an alert
     assert(/* condition */);
   });
 });
