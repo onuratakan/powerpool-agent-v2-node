@@ -170,9 +170,11 @@ export class RandaoJob extends AbstractJob {
   }
 
   private async _initiateSlashingIncrementFailedCounter() {
-    // TODO: implement interval job counter
-    if (this.isResolverJob()) {
-      this.failedInitiateSlashingEstimationsInARow += 1;
+      this.clog('debug', 'Initiating slashing increment failed counter');
+      // TODO: implement interval job counter
+      if (this.isResolverJob()) {
+        this.failedInitiateSlashingEstimationsInARow += 1;
+        this.clog('debug', 'Failed initiate slashing estimations in a row:', this.failedInitiateSlashingEstimationsInARow);
 
       if (this.failedInitiateSlashingEstimationsInARow > this.BLACKLIST_ESTIMATIONS_LIMIT) {
         this.applyClearResolverTimeouts();
@@ -187,11 +189,12 @@ export class RandaoJob extends AbstractJob {
   }
 
   private async initiateSlashing(resolverCalldata) {
-    const txEstimationFailed = () => {
-      this.clog('error', 'InitiateSlashing() estimation failed');
-      this.exitIfStrictTopic('estimations');
-      this._initiateSlashingIncrementFailedCounter();
-    };
+      this.clog('debug', 'Initiating slashing with resolver calldata:', resolverCalldata);
+      const txEstimationFailed = () => {
+        this.clog('error', 'InitiateSlashing() estimation failed');
+        this.exitIfStrictTopic('estimations');
+        this._initiateSlashingIncrementFailedCounter();
+      };
     const txExecutionFailed = () => {
       this.clog('error', 'InitiateSlashing() execution failed');
       this.exitIfStrictTopic('executions');
