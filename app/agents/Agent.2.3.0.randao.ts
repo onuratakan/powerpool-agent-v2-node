@@ -104,8 +104,9 @@ export class AgentRandao_2_3_0 extends AbstractAgent implements IRandaoAgent {
   }
 
   async selfUnassignFromJob(jobKey: string) {
-    this.clog('info', 'Executing Self-Unassign');
-    const calldata = this.encodeABI('releaseJob', [jobKey]);
+      this.clog('info', 'Executing Self-Unassign for job:', jobKey);
+      const calldata = this.encodeABI('releaseJob', [jobKey]);
+      this.clog('debug', 'Calldata for self unassign:', calldata);
     const tx = {
       to: this.getAddress(),
 
@@ -143,20 +144,22 @@ export class AgentRandao_2_3_0 extends AbstractAgent implements IRandaoAgent {
   }
 
   async initiateKeeperSlashing(
-    jobAddress: string,
-    jobId: number,
-    jobKey: string,
-    jobCalldata: string,
-    executorCallbacks: ExecutorCallbacks,
-  ) {
-    // jobAddress, jobId, myKeeperId, useResolver, jobCalldata
-    const calldata = this.encodeABI('initiateKeeperSlashing', [
-      jobAddress,
-      jobId,
-      this.getKeeperId(),
-      false,
-      jobCalldata,
-    ]);
+      jobAddress: string,
+      jobId: number,
+      jobKey: string,
+      jobCalldata: string,
+      executorCallbacks: ExecutorCallbacks,
+    ) {
+      this.clog('debug', 'Initiating keeper slashing for job:', jobKey);
+      // jobAddress, jobId, myKeeperId, useResolver, jobCalldata
+      const calldata = this.encodeABI('initiateKeeperSlashing', [
+        jobAddress,
+        jobId,
+        this.getKeeperId(),
+        false,
+        jobCalldata,
+      ]);
+      this.clog('debug', 'Calldata for initiate keeper slashing:', calldata);
     const tx = {
       to: this.getAddress(),
 
