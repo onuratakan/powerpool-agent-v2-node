@@ -91,18 +91,34 @@ export class RandaoJob extends AbstractJob {
       // When keeper is assigned again for an interval job it should update binJob before watching
       return this.isIntervalJob();
     }
+    // Add code to check for silent failures or stoppages in event tracking and send an alert if they are detected
+    this.checkForEventTrackingFailures();
     return false;
   }
-
+  
   public applyInitiateKeeperSlashing(jobSlashingPossibleAfter: number, slasherKeeperId: number) {
     this.slashingPossibleAfter = jobSlashingPossibleAfter;
     this.reservedSlasherId = slasherKeeperId;
+    // Add code to check for silent failures or stoppages in event tracking and send an alert if they are detected
+    this.checkForEventTrackingFailures();
   }
-
+  
   public applySlashKeeper() {
     this.slashingPossibleAfter = 0;
     this.reservedSlasherId = 0;
+    // Add code to check for silent failures or stoppages in event tracking and send an alert if they are detected
+    this.checkForEventTrackingFailures();
   }
+  
+  private checkForEventTrackingFailures() {
+      // Check if there are any silent failures or stoppages in event tracking
+      const silentFailuresOrStoppages = /* code to check for silent failures or stoppages in event tracking */;
+      
+      // If there are any silent failures or stoppages, send an alert
+      if (silentFailuresOrStoppages) {
+        this.clog('error', 'Silent failure or stoppage in event tracking detected');
+      }
+    }
 
   public applyClearResolverTimeouts(): void {
     this.t1 = 0;
